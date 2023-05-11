@@ -1,5 +1,6 @@
 import 'package:expense_tracker/widgets/expenses.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 95, 59, 181),
@@ -11,8 +12,40 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 );
 
 void main() {
-  runApp(
-    MaterialApp(
+  /*
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((fn) {
+    runApp(...);
+  });
+  */
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  // final brightness = MediaQuery.of(context).platformBrightness;
+  // final isDarkMode = brightness == Brightness.dark;
+  bool _isDarkMode = true;
+
+  void changeThemeModeHandler(bool isDarkMode) {
+    setState(() {
+      _isDarkMode = isDarkMode;
+    });
+  }
+
+  @override
+  Widget build(context) {
+    return MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
         useMaterial3: true,
         colorScheme: kDarkColorScheme,
@@ -57,8 +90,12 @@ void main() {
               ),
             ),
       ),
-      themeMode: ThemeMode.system, //sytem is default mode
-      home: const Expenses(),
-    ),
-  );
+      //themeMode: ThemeMode.system, //sytem is default mode
+      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: Expenses(
+        isDarkMode: _isDarkMode,
+        onChangeThemeMode: changeThemeModeHandler,
+      ),
+    );
+  }
 }

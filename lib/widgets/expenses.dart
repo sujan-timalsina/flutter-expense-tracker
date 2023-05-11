@@ -5,7 +5,15 @@ import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
-  const Expenses({super.key});
+  const Expenses({
+    super.key,
+    required this.isDarkMode,
+    required this.onChangeThemeMode,
+  });
+
+  final bool isDarkMode;
+
+  final void Function(bool isDarkMode) onChangeThemeMode;
 
   @override
   State<Expenses> createState() {
@@ -14,7 +22,20 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses = [];
+  final List<Expense> _registeredExpenses = [
+    Expense(
+      title: 'Flutter Training',
+      amount: 4999,
+      date: DateTime.now(),
+      category: Category.work,
+    ),
+    Expense(
+      title: 'Cinema',
+      amount: 500,
+      date: DateTime.now(),
+      category: Category.leisure,
+    ),
+  ];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
@@ -75,6 +96,12 @@ class _ExpensesState extends State<Expenses> {
           IconButton(
             onPressed: _openAddExpenseOverlay,
             icon: const Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
+              widget.onChangeThemeMode(!widget.isDarkMode);
+            },
+            icon: Icon(widget.isDarkMode ? Icons.light_mode : Icons.dark_mode),
           ),
         ],
       ),
