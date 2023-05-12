@@ -13,6 +13,7 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 
 void main() {
   /*
+  // Lock Device Orientation
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -35,6 +36,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // final brightness = MediaQuery.of(context).platformBrightness;
   // final isDarkMode = brightness == Brightness.dark;
+  // bool _isDarkMode = ThemeMode.system == ThemeMode.dark;
   bool _isDarkMode = true;
 
   void changeThemeModeHandler(bool isDarkMode) {
@@ -86,7 +88,7 @@ class _MyAppState extends State<MyApp> {
               titleLarge: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: kColorScheme.onSecondaryContainer,
-                fontSize: 16,
+                fontSize: 20,
               ),
             ),
       ),
